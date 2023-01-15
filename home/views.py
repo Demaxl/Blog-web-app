@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
-# Create your views here.
+from django.views import View 
+
+
+class HomePageView(View):
+    def get(self, request):
+        return HttpResponse("<h1>AB Blog</h1>")
