@@ -12,6 +12,8 @@ window.onload = () => {
             }
         })
     }
+
+    // document.getElementById("edit-profile-btn").addEventListener("click", editProfile)
 }
 
 
@@ -23,5 +25,8 @@ function registerForm(form) {
         document.getElementById("error-lbl").innerHTML = "Passwords must match"
         return false
     }
+}
 
+function editProfile() {
+    
 }

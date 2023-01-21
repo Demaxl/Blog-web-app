@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Page not found{% endblock title %}
+
+{% block body %}
+    <div class="container my-5">
+        <h1 class="display-3">The requested page was not found on this server</h1>
+        <a href="{% url 'index' %}">Go back to homepage</a>
+    </div>
+{% endblock body %}

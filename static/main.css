@@ -1,1 +1,16 @@
-/*# sourceMappingURL=main.css.map */
+.join {
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+}
+
+.date {
+  background-color: #ccc;
+  display: inline-block;
+}
+
+.rounded-circle {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}/*# sourceMappingURL=main.css.map */

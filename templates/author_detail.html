@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ author.username }}{% endblock title %}
+
+
+{% block body %}
+    <div class="container mt-3">
+        {% if message %}
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>{{ message }}</strong>
+            </div>
+        {% endif %}
+        <div class="card mx-auto" style="max-width:400px">
+            <img src="{{ author.profile_photo }}" alt="{{ author.username }}'s profile photo" 
+                class="rounded-circle card-img-top mx-auto d-block mt-3" style="width:200px">
+            <div class="card-body">
+                <h1 class="card-title">{{ author.first_name }} {{ author.last_name }}</h1>
+                <div class=" px-2 rounded date ">
+                    <span class="join">Member since {{ author.joined_date }}</span>
+                </div>
+                {% if user.is_authenticated and user.username == author.username %}
+                    <button type="button" class="btn btn-dark d-block mt-3" data-bs-toggle="modal" data-bs-target="#edit-profile-modal">
+                        Edit profile
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="edit-profile-modal">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit profile</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                        
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="form-floating mb-3 mt-3">
+                                            <input type="text" class="form-control" id="fname" placeholder="First name" name="fname" value="{{ author.first_name }}" required>
+                                            <label for="fname">First name</label>
+                                        </div>
+                                        
+                                        <div class="form-floating mt-3 mb-3">
+                                            <input type="text" class="form-control" id="lname" placeholder="Last name" name="lname" value="{{ author.last_name }}" required>
+                                            <label for="lname">Last name</label>
+                                        </div>
+                        
+                                        <div class="form-floating mt-3 mb-3">
+                                            <input type="url" name="pfp" id="pfp" placeholder="Profile photo" class="form-control" value="{{ author.profile_photo }}">
+                                            <label for="pfp">Profile photo link</label>
+                                        </div>
+
+                                        <div class="form-floating mt-3 mb-3">
+                                            <textarea class="form-control" name="about" id="about" placeholder="About" style="height:150px">{{ author.about }}</textarea>
+                                            <label for="about">About</label>
+                                        </div>
+                                    </div>
+                            
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn btn-dark" value="Submit">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <div class="my-3">
+                    {% with about=author.about %}
+                        {% if about %}
+                            <p>{{ about }}</p>
+                        {% else %}
+                            {% if just_created and user.is_authenticated and user.username == author.username%}
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="about-modal-btn" hidden></button>
+                              
+                                <!-- The Modal -->
+                                <div class="modal fade" id="myModal">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Tell us about yourself</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                    
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <div class="modal-body">
+                                                    <div class="form-floating mt-3 mb-3">
+                                                        <textarea class="form-control" name="about" id="about" placeholder="About" style="height:150px">{{ author.about }}</textarea>
+                                                        <label for="about">About</label>
+                                                    </div>
+                                                </div>
+                                        
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <input type="submit" class="btn btn-dark" value="Submit">
+                                                </div>
+                                                
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <p>No bio yet</p>
+                            {% endif %}
+                            
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div> 
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector("#about-modal-btn").click()
+        })
+    </script>
+{% endblock body %}
