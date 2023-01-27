@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.db import IntegrityError
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.http import JsonResponse
 
 from .models import *
@@ -66,9 +66,11 @@ class RegisterView(View):
         return redirect(reverse("author", kwargs={'username':username}))
         
 
-class HomePageView(View):
-    def get(self, request):
-        return render(request, "home.html")
+class HomePageView(ListView):
+    model = Blog
+    template_name = "home.html"
+    context_object_name = "articles"
+   
 
 
 class AuthorDetailView(View):
@@ -107,7 +109,17 @@ class AuthorDetailView(View):
         request.session['message'] = "Profile details updated successfully"
 
         return redirect(reverse("author", kwargs={'username':user.username}))
-    
+
+class ArticleDetailView(DetailView):
+    model = Blog
+    context_object_name = "article"
+    template_name = "article.html"
+
+def test(request, pk):
+    print(request.path)
+    print(title)
+    return HttpResponse("Yes")
+
 class API:
     """ Class that handles all the put requests """
 

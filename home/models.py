@@ -19,7 +19,7 @@ class Blog(models.Model):
     publish_date = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=128)        
     body = models.TextField()                                                              
-    cover_image = models.URLField(blank=True, default="https://www.fastcat.com.ph/wp-content/uploads/2016/04/dummy-post-horisontal-thegem-blog-default.jpg", max_length=1000)
+    cover_image = models.URLField(blank=True, default="https://www.intl-spectrum.com/articles/r75/ArticleDefault.jpg?x=528x372", max_length=1000000000000)
 
     def __str__(self):
         return f"{self.subject} by {self.author}"

@@ -18,7 +18,13 @@
 }   
 
 .rounded-circle{
-    border-radius:50%;
-    width:200px;
-    height:200px;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.card {
+    width: 400px;
+    height: 300px;
+    cursor: pointer
 }
