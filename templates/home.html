@@ -2,12 +2,22 @@
 
 {% block title %}Demaxlab Homepage{% endblock title %}
 
+{% block head %}
+    <style>
+        .card {
+            width: 400px;
+            height: 300px;
+            cursor: pointer
+        }
+    </style>
+{% endblock head %}
+
 {% block body %}
     <div class="container">
         <h1 class="display-4 text-center">Trending articles</h1>
         <div class="mt-4 d-flex flex-wrap gap-3 justify-content-around">
             {% for article in articles %}
-                <div class="card bg-dark" onclick="location.href = '#'">
+                <div class="card bg-dark" onclick="location.href = '{% url 'article' article.id %}'">
                     <img class="card-img-top" src="{{ article.cover_image }}" alt="Card image" style="height:250px">
                     <div class="card-body p-0 m-0 d-flex align-items-center justify-content-around" style="height:50px">
                         <h4 class="card-title text-white m-0 ">{{ article.subject }}</h4>

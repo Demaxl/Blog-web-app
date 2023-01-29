@@ -2,6 +2,27 @@
 
 {% block title %}{{ author.username }}{% endblock title %}
 
+{% block head %}
+    <style>
+        .join {
+            font-size: 14px;
+            color: black;
+            font-weight: bold
+        }
+
+
+        .date {
+            background-color: #ccc;
+            display: inline-block;
+        }   
+
+        .rounded-circle{
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+{% endblock head %}
 
 {% block body %}
     <div class="container mt-3">

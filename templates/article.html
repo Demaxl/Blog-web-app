@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row gap-3">
+            <div class="col-md bg-light">
+                <img class="img-fluid img-thumbnail" src="{{ article.cover_image }}" alt="Cover image">
+            </div>
+            <div class="col-md">
+                <h1 class="display-3 mb-5 text-center">{{ article.subject }}</h1>
+                <p>{{ article.body }}</p>
+            </div>
+        </div>
+
+        <hr>
+        <h5 class="display-7 text-center">Published by <a href="{% url 'author' article.author.username %}">{{ article.author.username }}</a></h5>
+    </div>
+
+    <script>
+        // Initialize popovers
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
+{% endblock body %}

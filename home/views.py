@@ -117,7 +117,6 @@ class ArticleDetailView(DetailView):
 
 def test(request, pk):
     print(request.path)
-    print(title)
     return HttpResponse("Yes")
 
 class API:
