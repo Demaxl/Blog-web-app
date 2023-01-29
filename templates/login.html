@@ -14,6 +14,9 @@
             <h1 class="display-1">Login</h1>
             <form action="{% url 'login' %}" method="post">
                 {% csrf_token %}
+                {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                {% endif %}
                 <div class="form-floating mb-3 mt-3">
                     <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
                     <label for="username">Username</label>

@@ -1,10 +1,14 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.views import View 
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db import IntegrityError
 from django.views.generic import DetailView, ListView
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+
+from django.contrib.auth.decorators import login_required
+
 
 from .models import *
 import json
@@ -12,17 +16,28 @@ import json
 class Auth(View):
     # Login get view
     def get(self, request):
-        return render(request, "login.html")
+        if request.user.is_authenticated:
+            return redirect(reverse("index"))
+
+        next_ = request.GET.get("next", False)
+
+        return render(request, "login.html", {
+            "next": next_
+        })
     
     # Login post view
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
+        next_ = request.POST.get("next", False)
 
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
             login(request, user)
+            if next_:
+                return redirect(next_)
+
             return redirect(reverse("index"))
         else:
             return render(request, "login.html", {
@@ -114,6 +129,14 @@ class ArticleDetailView(DetailView):
     model = Blog
     context_object_name = "article"
     template_name = "article.html"
+
+decorator = login_required(login_url=reverse_lazy("login"))
+auth_required = method_decorator(decorator)
+class ArticleCreateView(View):
+    @auth_required
+    def get(self, request):
+        return render(request, "create_article.html")
+
 
 def test(request, pk):
     print(request.path)
